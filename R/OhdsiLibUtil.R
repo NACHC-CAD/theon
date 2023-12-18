@@ -46,7 +46,7 @@ OhdsiLibUtil = R6Class(
       # ---
 
       installFromCran = function(pkgName, pkgVersion) {
-        if (requireNamespace(pkgName, quietly = TRUE) == TRUE && packageVersionExists(pkgName, pkgVersion)) {
+        if (requireNamespace(pkgName, quietly = TRUE) == TRUE && self$packageVersionExists(pkgName, pkgVersion)) {
           print(paste("Correct version of package already installed: ", pkgName, pkgVersion, sep = " "))
         } else {
           print(paste("* * * Installing from CRAN:", pkgName, pkgVersion, sep = " "))
@@ -59,7 +59,7 @@ OhdsiLibUtil = R6Class(
       },
 
       installFromGithub = function(pkgName, pkgVersion) {
-        if (requireNamespace(pkgName, quietly = TRUE) == TRUE && packageVersionExists(pkgName, pkgVersion)) {
+        if (requireNamespace(pkgName, quietly = TRUE) == TRUE && self$packageVersionExists(pkgName, pkgVersion)) {
           print(paste("Correct version of package already installed: ", pkgName, pkgVersion, sep = " "))
         } else {
           print(paste("* * * Installing from GitHub:", pkgName, pkgVersion, sep = " "))
@@ -88,12 +88,11 @@ OhdsiLibUtil = R6Class(
           writeLines(paste0("COULD NOT UNLOAD PACKAGE: ", pkgName))
         })
         tryCatch({
-          removePackage(pkgName)
+          self$removePackage(pkgName)
         }, error = function(e) {
           writeLines(paste0("COULD NOT REMOVE PACKAGE: ", pkgName))
         })
       }
 
     )
-
 )
