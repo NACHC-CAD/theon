@@ -1,0 +1,11 @@
+Package: theon
+Type: Package
+Title: Theon (library management)
+Version: 0.1.0
+Author: John Gresh
+Maintainer: The package maintainer <johngresh@curlewconsulting.com>
+Description: R package for library management (named after Theon of Alexandria)
+    Originally created for use with OHDSI/Strategus.
+License: Apache 2
+Encoding: UTF-8
+LazyData: true
