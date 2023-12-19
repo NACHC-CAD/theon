@@ -6,9 +6,9 @@
 
 library(R6)
 
-OhdsiLibUtil = R6Class(
+Theon = R6Class(
 
-    classname = "OhdsiLibUtil",
+    classname = "Theon",
 
     public = list (
 
@@ -85,24 +85,38 @@ OhdsiLibUtil = R6Class(
       #
       # ---
 
-      removePackage = function(pkgName) {
+      removePackage = function(pkgName, lib = NA) {
         required <- requireNamespace(pkgName, quietly = TRUE)
         print(paste(pkgName, required, sep = ": "))
         if (required) {
-          remove.packages(pkgName)
+          remove.packages(pkgName, lib = lib)
         }
       },
 
-      forceRemovePackage = function(pkgName) {
+      forceRemovePackage = function(pkgName, lib = NA) {
         tryCatch({
           devtools::unload(pkgname)
         }, error = function(e) {
-          writeLines(paste0("COULD NOT UNLOAD PACKAGE: ", pkgName))
+          writeLines(paste0("Unload of package skipped: ", pkgName))
         })
         tryCatch({
-          self$removePackage(pkgName)
+          # remove
+          self$removePackage(pkgName, lib = lib)
+          # sometime this needs to happen if libPath is being mucked with
+          tryCatch({
+            devtools::unload(pkgName)
+          },
+            error = function(e) {
+            writeLines("Unload not needed.")
+          })
+          tryCatch({
+            remove.packages(pkgName, lib = lib)
+          },
+          error = function(e) {
+            writeLines("remove not needed.")
+          })
         }, error = function(e) {
-          writeLines(paste0("COULD NOT REMOVE PACKAGE: ", pkgName))
+          writeLines(paste0("Remove of package skipped: ", pkgName))
         })
       }
 

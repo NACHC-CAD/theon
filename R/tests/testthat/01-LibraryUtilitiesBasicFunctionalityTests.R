@@ -1,6 +1,6 @@
 # ---
 #
-# Script to test OhdsiLibUtil functionality.
+# Script to test Theon functionality.
 #
 # ---
 
@@ -25,7 +25,7 @@ test_that(
   {
     writeLines(getwd())
     expect_true(1 == 1)
-    libUtil <- getNewOhdsiLibUtil()
+    libUtil <- getTheon()
     libUtil$test()
   }
 )
@@ -35,7 +35,7 @@ test_that(
   {
     writeLines(getwd())
     expect_true(1 == 1)
-    libUtil <- getNewOhdsiLibUtil()
+    libUtil <- getTheon()
     libUtil$checkPackageVersion("dummy")
   }
 )
@@ -45,7 +45,7 @@ test_that(
   {
     writeLines(getwd())
     expect_true(1 == 1)
-    libUtil <- getNewOhdsiLibUtil()
+    libUtil <- getTheon()
     libUtil$packageVersionExists("dummy", "0.1.3")
   }
 )
@@ -55,7 +55,7 @@ test_that(
   {
     writeLines(getwd())
     expect_true(1 == 1)
-    libUtil <- getNewOhdsiLibUtil()
+    libUtil <- getTheon()
     libUtil$forceRemovePackage("dummy")
     libUtil$installFromCran("dummy", "0.1.3", "C:/temp")
   }
@@ -66,7 +66,7 @@ test_that(
   {
     writeLines(getwd())
     expect_true(1 == 1)
-    libUtil <- getNewOhdsiLibUtil()
+    libUtil <- getTheon()
     libUtil$forceRemovePackage("dummy")
     libUtil$installFromCran("dummy", "0.1.3")
     library(dummy)
@@ -78,7 +78,7 @@ test_that(
   {
     writeLines(getwd())
     expect_true(1 == 1)
-    libUtil <- getNewOhdsiLibUtil()
+    libUtil <- getTheon()
     libUtil$forceRemovePackage("CohortGenerator")
     libUtil$installFromGithub("OHDSI/CohortGenerator", "v0.8.0", "C:/temp")
   }
@@ -89,7 +89,7 @@ test_that(
   {
     writeLines(getwd())
     expect_true(1 == 1)
-    libUtil <- getNewOhdsiLibUtil()
+    libUtil <- getTheon()
     libUtil$forceRemovePackage("CohortGenerator")
     libUtil$installFromGithub("OHDSI/CohortGenerator", "v0.8.0")
     library(CohortGenerator)
