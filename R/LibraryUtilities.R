@@ -4,10 +4,10 @@
 #
 # ---
 
-source("./R/OhdsiLibUtil.R")
+source("./R/Theon.R")
 
-getNewOhdsiLibUtil <- function() {
-  rtn <- OhdsiLibUtil$new()
+getTheon <- function() {
+  rtn <- Theon$new()
   return(rtn)
 }
 
