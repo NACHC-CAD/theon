@@ -45,25 +45,37 @@ OhdsiLibUtil = R6Class(
       #
       # ---
 
-      installFromCran = function(pkgName, pkgVersion) {
+      installFromCran = function(pkgName, pkgVersion, lib = NA) {
         if (requireNamespace(pkgName, quietly = TRUE) == TRUE && self$packageVersionExists(pkgName, pkgVersion)) {
           print(paste("Correct version of package already installed: ", pkgName, pkgVersion, sep = " "))
         } else {
           print(paste("* * * Installing from CRAN:", pkgName, pkgVersion, sep = " "))
           if(pkgName == "remotes") {
-            install.packages("remotes", INSTALL_opts = "--no-multiarch")
+            if(is.na(lib)) {
+              install.packages("remotes", INSTALL_opts = "--no-multiarch")
+            } else {
+              install.packages("remotes", INSTALL_opts = "--no-multiarch", lib = lib)
+            }
           } else {
-            remotes::install_version(pkgName, version = pkgVersion, upgrade = FALSE, INSTALL_opts = "--no-multiarch", )
+            if(is.na(lib)) {
+              remotes::install_version(pkgName, version = pkgVersion, upgrade = FALSE, INSTALL_opts = "--no-multiarch")
+            } else {
+              remotes::install_version(pkgName, version = pkgVersion, upgrade = FALSE, INSTALL_opts = "--no-multiarch", lib = lib)
+            }
           }
         }
       },
 
-      installFromGithub = function(pkgName, pkgVersion) {
+      installFromGithub = function(pkgName, pkgVersion, lib = NA) {
         if (requireNamespace(pkgName, quietly = TRUE) == TRUE && self$packageVersionExists(pkgName, pkgVersion)) {
           print(paste("Correct version of package already installed: ", pkgName, pkgVersion, sep = " "))
         } else {
           print(paste("* * * Installing from GitHub:", pkgName, pkgVersion, sep = " "))
-          remotes::install_github(pkgName, ref=pkgVersion, upgrade = FALSE, INSTALL_opts = "--no-multiarch")
+          if(is.na(lib)) {
+            remotes::install_github(pkgName, ref=pkgVersion, upgrade = FALSE, INSTALL_opts = "--no-multiarch")
+          } else {
+            remotes::install_github(pkgName, ref=pkgVersion, upgrade = FALSE, INSTALL_opts = "--no-multiarch", lib = lib)
+          }
         }
       },
 
