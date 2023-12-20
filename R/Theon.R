@@ -58,9 +58,9 @@ Theon = R6Class(
             }
           } else {
             if(is.na(lib)) {
-              remotes::install_version(pkgName, version = pkgVersion, upgrade = FALSE, INSTALL_opts = "--no-multiarch")
+              remotes::install_version(pkgName, version = pkgVersion, upgrade = FALSE, force = TRUE, INSTALL_opts = "--no-multiarch")
             } else {
-              remotes::install_version(pkgName, version = pkgVersion, upgrade = FALSE, INSTALL_opts = "--no-multiarch", lib = lib)
+              remotes::install_version(pkgName, version = pkgVersion, upgrade = FALSE, force = TRUE, INSTALL_opts = "--no-multiarch", lib = lib)
             }
           }
         }
