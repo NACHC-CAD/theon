@@ -72,9 +72,9 @@ Theon = R6Class(
         } else {
           print(paste("* * * Installing from GitHub:", pkgName, pkgVersion, sep = " "))
           if(is.na(lib)) {
-            remotes::install_github(pkgName, ref=pkgVersion, upgrade = FALSE, INSTALL_opts = "--no-multiarch")
+            remotes::install_github(pkgName, ref=pkgVersion, upgrade = FALSE, force = TRUE, INSTALL_opts = "--no-multiarch")
           } else {
-            remotes::install_github(pkgName, ref=pkgVersion, upgrade = FALSE, INSTALL_opts = "--no-multiarch", lib = lib)
+            remotes::install_github(pkgName, ref=pkgVersion, upgrade = FALSE, force = TRUE, INSTALL_opts = "--no-multiarch", lib = lib)
           }
         }
       },
@@ -102,22 +102,19 @@ Theon = R6Class(
         tryCatch({
           # remove
           self$removePackage(pkgName, lib = lib)
-          # sometime this needs to happen if libPath is being mucked with
-          tryCatch({
-            devtools::unload(pkgName)
-          },
-            error = function(e) {
-            writeLines("Unload not needed.")
-          })
-          tryCatch({
-            remove.packages(pkgName, lib = lib)
-          },
-          error = function(e) {
-            writeLines("remove not needed.")
-          })
         }, error = function(e) {
           writeLines(paste0("Remove of package skipped: ", pkgName))
         })
+      },
+
+      removeForeign = function(pkgName, lib) {
+        dirPath = paste0(lib, "/", pkgName)
+        if (file.exists(dirPath)) {
+          unlink(dirPath, recursive = TRUE)
+          cat("Directory", dirPath, "removed successfully.\n")
+        } else {
+          cat("Directory", dirPath, "does not exist.\n")
+        }
       }
 
     )

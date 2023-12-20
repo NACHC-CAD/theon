@@ -21,6 +21,20 @@ source("./R/LibraryUtilities.R")
 # ---
 
 test_that(
+  "The removeForeign function works.",
+  {
+    writeLines(getwd())
+    expect_true(1 == 1)
+    libUtil <- getTheon()
+    lib <- "C:/temp"
+    libUtil$removeForeign("CohortGenerator", lib)
+    libUtil$installFromGithub("OHDSI/CohortGenerator", "v0.8.0", lib)
+    libUtil$removeForeign("CohortGenerator", lib)
+    libUtil$removeForeign("CohortGenerator", lib)
+  }
+)
+
+test_that(
   "The test function works.",
   {
     writeLines(getwd())
