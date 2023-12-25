@@ -94,16 +94,26 @@ Theon = R6Class(
       },
 
       forceRemovePackage = function(pkgName, lib = NA) {
+        writeLines("* * * START FORCE REMOVE * * *")
+        writeLines("The remove functions in R tend to throw exceptions for things like trying to remove a package that already has been removed.")
+        writeLines("Generally these errors can be ignored.")
+        writeLines("Check to see that the package was actually removed after running this function.")
+        writeLines("(Use theon::getPackageDetails(pkgName))")
         tryCatch({
           devtools::unload(pkgname)
         }, error = function(e) {
-          writeLines(paste0("Unload of package skipped: ", pkgName))
+          writeLines(paste0("The unload method skipped: ", pkgName))
+        })
+        tryCatch({
+          remove.packages(pkgName)
+        }, error = function(e) {
+          writeLines(paste0("Remove of package skipped: ", pkgName))
         })
         tryCatch({
           # remove
           self$removePackage(pkgName, lib = lib)
         }, error = function(e) {
-          writeLines(paste0("Remove of package skipped: ", pkgName))
+          writeLines(paste0("Remove of required package skipped: ", pkgName))
         })
       },
 
@@ -115,7 +125,47 @@ Theon = R6Class(
         } else {
           cat("Directory", dirPath, "does not exist.\n")
         }
+        writeLines("* * * END FORCE REMOVE * * *")
+      },
+
+      getPackageDetails = function(pkgName) {
+        pkgDf <- installed.packages()
+        pkgDf <- as.data.frame(pkgDf)
+        if (pkgName %in% pkgDf$Package) {
+          packageDetails <- pkgDf[pkgDf$Package == pkgName, ]
+          packageList <- as.data.frame(packageDetails)
+          return(packageList)
+        } else {
+          return(NA)
+        }
+      },
+
+      getPackageDetailsAsList = function(pkgName) {
+        pkgDf <- installed.packages()
+        pkgDf <- as.data.frame(pkgDf)
+        if (pkgName %in% pkgDf$Package) {
+          packageDetails <- pkgDf[pkgDf$Package == pkgName, ]
+          packageList <- as.list(packageDetails)
+          return(packageList)
+        } else {
+          return(NA)
+        }
+      },
+
+      getPackageVersion = function(pkgName) {
+        deets <- self$getPackageDetails(pkgName)
+        if(is.data.frame(deets) == TRUE && nrow(deets) > 0) {
+          rtn <- deets$Version
+          return(rtn)
+        } else {
+          return(NA)
+        }
       }
 
     )
+
 )
+
+
+
+

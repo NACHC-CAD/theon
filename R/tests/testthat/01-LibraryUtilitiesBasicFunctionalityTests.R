@@ -110,6 +110,52 @@ test_that(
   }
 )
 
+test_that(
+  "Get package details works.",
+  {
+    writeLines(getwd())
+    expect_true(1 == 1)
+    libUtil <- getTheon()
+    deets <- libUtil$getPackageDetails("remotes")
+    deets
+  }
+)
+
+test_that(
+  "Get package details works.",
+  {
+    writeLines(getwd())
+    expect_true(1 == 1)
+    libUtil <- getTheon()
+    deets <- libUtil$getPackageDetailsAsList("remotes")
+    deets
+  }
+)
+
+test_that(
+  "Get package version works for package that does not exist.",
+  {
+    writeLines(getwd())
+    expect_true(1 == 1)
+    libUtil <- getTheon()
+    deets <- libUtil$getPackageVersion("thisPackageDoesNotExist")
+    deets
+  }
+)
+
+test_that(
+  "Get package version works for package that does exist.",
+  {
+    writeLines(getwd())
+    expect_true(1 == 1)
+    libUtil <- getTheon()
+    deets <- libUtil$getPackageVersion("remotes")
+    deets
+  }
+)
+
+
+
 
 
 
