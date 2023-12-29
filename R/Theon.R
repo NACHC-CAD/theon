@@ -54,12 +54,14 @@ Theon = R6Class(
             if(is.na(lib)) {
               install.packages("remotes", INSTALL_opts = "--no-multiarch")
             } else {
+              writeLines(paste0("lib = ", lib))
               install.packages("remotes", INSTALL_opts = "--no-multiarch", lib = lib)
             }
           } else {
             if(is.na(lib)) {
               remotes::install_version(pkgName, version = pkgVersion, upgrade = FALSE, force = TRUE, INSTALL_opts = "--no-multiarch")
             } else {
+              writeLines(paste0("lib = ", lib))
               remotes::install_version(pkgName, version = pkgVersion, upgrade = FALSE, force = TRUE, INSTALL_opts = "--no-multiarch", lib = lib)
             }
           }
@@ -94,7 +96,14 @@ Theon = R6Class(
       },
 
       forceRemovePackage = function(pkgName, lib = NA) {
-        writeLines("* * * START FORCE REMOVE * * *")
+        writeLines("")
+        writeLines("")
+        writeLines("")
+        writeLines("# ---")
+        writeLines("#")
+        writeLines("# * * * START FORCE REMOVE * * *")
+        writeLines("#")
+        writeLines("# ---")
         writeLines("The remove functions in R tend to throw exceptions for things like trying to remove a package that already has been removed.")
         writeLines("Generally these errors can be ignored.")
         writeLines("Check to see that the package was actually removed after running this function.")
@@ -115,6 +124,14 @@ Theon = R6Class(
         }, error = function(e) {
           writeLines(paste0("Remove of required package skipped: ", pkgName))
         })
+        writeLines("# ---")
+        writeLines("#")
+        writeLines("# * * * END FORCE REMOVE * * *")
+        writeLines("#")
+        writeLines("# ---")
+        writeLines("")
+        writeLines("")
+        writeLines("")
       },
 
       removeForeign = function(pkgName, lib) {
@@ -125,7 +142,6 @@ Theon = R6Class(
         } else {
           cat("Directory", dirPath, "does not exist.\n")
         }
-        writeLines("* * * END FORCE REMOVE * * *")
       },
 
       getPackageDetails = function(pkgName) {
