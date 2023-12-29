@@ -1,7 +1,7 @@
 Package: theon
 Type: Package
 Title: Theon (library management)
-Version: 1.0.7
+Version: 1.0.8-2023-12-29
 Author: John Gresh
 Maintainer: The package maintainer <johngresh@curlewconsulting.com>
 Description: R package for library management (named after Theon of Alexandria)
